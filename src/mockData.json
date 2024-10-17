@@ -1,0 +1,163 @@
+{
+    "responseCode": 200,
+    "responseMessage": "Channel Listing",
+    "response": [
+      {
+        "id": 564,
+        "title": "LOL",
+        "description": "The LOL pop-up channel will feature a mix of family comedies, action-comedies, and comedy-horror films. It offers a fun and light-hearted alternative to the usual suspense and horror themes of October. Designed to appeal to Malaysia's multicultural audience, the programming will provide inclusive entertainment that resonates across various language groups.",
+        "stbNumber": "100",
+        "language": "International",
+        "category": "Variety Entertainment",
+        "originalImage": "http://linear-poster.astro.com.my/prod/logo/LOL.png",
+        "backupImage": "http://linear-poster.astro.com.my/prod/poster/LOL_IVP_LAND_171x96.jpg",
+        "imageUrl": "https://divign0fdw3sv.cloudfront.net/Images/ChannelLogo/contenthub/564_144.png",
+        "isRadioExclusive": false,
+        "isAstroGoExclusive": false,
+        "isOnDemandExclusive": false,
+        "filters": ["IVP", "Set Top Box (OD)", "Variety Entertainment"],
+        "subtitle": "CH100",
+        "subtitle_my": "CH100",
+        "detailUrl": "/channels/LOL-564",
+        "currentSchedule": [
+          {
+            "eventId": "47360112",
+            "title": "Peter Rabbit",
+            "programmeId": "KNWJJ",
+            "episodeId": "",
+            "datetime": "2024-10-16 18:00:00.0",
+            "datetimeInUtc": "2024-10-16 10:00:00.0",
+            "duration": "01:45:00",
+            "siTrafficKey": "1:10000278:52781115",
+            "detailUrl": "/details/Peter-Rabbit-1:10000278:52781115"
+          },
+          {
+            "eventId": "47360113",
+            "title": "Gila-Gila Ep12",
+            "programmeId": "ITVEI",
+            "episodeId": "ITVET",
+            "datetime": "2024-10-16 19:45:00.0",
+            "datetimeInUtc": "2024-10-16 11:45:00.0",
+            "duration": "00:15:00",
+            "siTrafficKey": "1:10000278:52781116",
+            "detailUrl": "/details/Gila-Gila-Ep12-1:10000278:52781116"
+          },
+          {
+            "eventId": "47391322",
+            "title": "Ghosts Ep03",
+            "programmeId": "KMZQF",
+            "episodeId": "KMZQJ",
+            "datetime": "2024-10-16 20:00:00.0",
+            "datetimeInUtc": "2024-10-16 12:00:00.0",
+            "duration": "00:30:00",
+            "siTrafficKey": "1:10000278:52852158",
+            "detailUrl": "/details/Ghosts-Ep03-1:10000278:52852158"
+          },
+          {
+            "eventId": "47391323",
+            "title": "Ghosts Ep05",
+            "programmeId": "KMZQF",
+            "episodeId": "KNJTL",
+            "datetime": "2024-10-16 20:30:00.0",
+            "datetimeInUtc": "2024-10-16 12:30:00.0",
+            "duration": "00:30:00",
+            "siTrafficKey": "1:10000278:52852159",
+            "detailUrl": "/details/Ghosts-Ep05-1:10000278:52852159"
+          },
+          {
+            "eventId": "47360115",
+            "title": "Hantu Kak Limah Balik Rumah",
+            "programmeId": "GFGQP",
+            "episodeId": "",
+            "datetime": "2024-10-16 21:00:00.0",
+            "datetimeInUtc": "2024-10-16 13:00:00.0",
+            "duration": "01:45:00",
+            "siTrafficKey": "1:10000278:52781118",
+            "detailUrl": "/details/Hantu-Kak-Limah-Balik-Rumah-1:10000278:52781118"
+          }
+        ]
+      },
+      {
+        "id": 395,
+        "title": "TV1 HD",
+        "description": "TV1 is a Malaysian free-to-air television channel airing various types of programmes, drama and news. Find out more on CH101 now!",
+        "stbNumber": "101",
+        "language": "Malay",
+        "category": "Variety Entertainment",
+        "originalImage": "http://linear-poster.astro.com.my/prod/logo/TV1_v1.png",
+        "backupImage": "http://linear-poster.astro.com.my/prod/poster/ivp_default_1028_IVP_LAND_448x252.jpg",
+        "imageUrl": "https://divign0fdw3sv.cloudfront.net/Images/ChannelLogo/contenthub/395_144.png",
+        "isRadioExclusive": false,
+        "isAstroGoExclusive": false,
+        "isOnDemandExclusive": false,
+        "filters": [
+          "iSOTT",
+          "IVP",
+          "Set Top Box (OD)",
+          "SOTT",
+          "Variety Entertainment"
+        ],
+        "subtitle": "CH101",
+        "subtitle_my": "CH101",
+        "detailUrl": "/channels/TV1-HD-395",
+        "currentSchedule": [
+          {
+            "eventId": "47354497",
+            "title": "(L) Fikrah",
+            "programmeId": "714403",
+            "episodeId": "",
+            "datetime": "2024-10-16 18:00:00.0",
+            "datetimeInUtc": "2024-10-16 10:00:00.0",
+            "duration": "00:45:00",
+            "siTrafficKey": "1:10000501:52715456",
+            "detailUrl": "/details/L-Fikrah-1:10000501:52715456"
+          },
+          {
+            "eventId": "47354498",
+            "title": "Kopi Sentul Mocha Santorini Ep19",
+            "programmeId": "838718",
+            "episodeId": "845264",
+            "datetime": "2024-10-16 18:45:00.0",
+            "datetimeInUtc": "2024-10-16 10:45:00.0",
+            "duration": "00:59:00",
+            "siTrafficKey": "1:10000501:52715457",
+            "detailUrl": "/details/Kopi-Sentul-Mocha-Santorini-Ep19-1:10000501:52715457"
+          },
+          {
+            "eventId": "47354499",
+            "title": "(L) Kanta 744",
+            "programmeId": "783612",
+            "episodeId": "",
+            "datetime": "2024-10-16 19:44:00.0",
+            "datetimeInUtc": "2024-10-16 11:44:00.0",
+            "duration": "00:16:00",
+            "siTrafficKey": "1:10000501:52715458",
+            "detailUrl": "/details/L-Kanta-744-1:10000501:52715458"
+          },
+          {
+            "eventId": "47354500",
+            "title": "(L) Berita Perdana",
+            "programmeId": "1:10000501:52715459",
+            "episodeId": "",
+            "datetime": "2024-10-16 20:00:00.0",
+            "datetimeInUtc": "2024-10-16 12:00:00.0",
+            "duration": "00:30:00",
+            "siTrafficKey": "1:10000501:52715459",
+            "detailUrl": "/details/L-Berita-Perdana-1:10000501:52715459"
+          },
+          {
+            "eventId": "47354501",
+            "title": "(L) Malaysia Tonight",
+            "programmeId": "785362",
+            "episodeId": "",
+            "datetime": "2024-10-16 20:30:00.0",
+            "datetimeInUtc": "2024-10-16 12:30:00.0",
+            "duration": "00:30:00",
+            "siTrafficKey": "1:10000501:52715460",
+            "detailUrl": "/details/L-Malaysia-Tonight-1:10000501:52715460"
+          }
+        ]
+      }
+    ]
+  }
+  
