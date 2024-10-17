@@ -1,5 +1,5 @@
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -7,7 +7,7 @@ import {
 
 import ContentGuide from "./pages/contentGuide";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(<Route index element={<ContentGuide />} />)
 );
 
