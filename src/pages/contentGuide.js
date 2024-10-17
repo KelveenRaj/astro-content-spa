@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import {
   Box,
@@ -6,10 +6,21 @@ import {
   Grid,
   Text,
   Input,
-  Checkbox,
   Button,
   Spinner,
+  HStack,
+  Heading,
+  VStack,
+  Image,
+  IconButton,
 } from "@chakra-ui/react";
+import {
+  FaHeart,
+  FaRegHeart,
+  FaFilter,
+  FaSortAlphaUp,
+  FaSortAlphaDown,
+} from "react-icons/fa";
 import ChannelCard from "../components/channelCard";
 import { LANGUAGES, CATEGORIES } from "../utils/constants";
 
@@ -21,11 +32,13 @@ const ContentGuide = () => {
   const [languageFilter, setLanguageFilter] = useState("All");
   const [isHD, setIsHD] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(localStorage.getItem("favorites")) || [];
   });
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [sortOrder, setSortOrder] = useState("none");
 
-  // Fetch channels from the API
   useEffect(() => {
     const fetchChannels = async () => {
       setIsLoading(true);
@@ -33,8 +46,8 @@ const ContentGuide = () => {
         const response = await axios.get(
           "https://contenthub-api.eco.astro.com.my/channel/all.json"
         );
-        setChannels(response.data.response || []); // Store the API response channels
-        setFilteredChannels(response.data.response || []); // Initially show all channels
+        setChannels(response.data.response || []);
+        setFilteredChannels(response.data.response || []);
       } catch (error) {
         console.error("Error fetching channels:", error);
       } finally {
@@ -45,37 +58,32 @@ const ContentGuide = () => {
     fetchChannels();
   }, []);
 
-  // Persist favorites to localStorage when they change
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  // Function to filter channels based on the active filters
-  const filterChannels = () => {
+  const filterChannels = useMemo(() => {
+    setIsFiltering(true);
     let updatedChannels = channels;
 
-    // Apply category filter if it's not "All"
     if (categoryFilter !== "All") {
       updatedChannels = updatedChannels.filter(
         (channel) => channel.category === categoryFilter
       );
     }
 
-    // Apply language filter if it's not "All"
     if (languageFilter !== "All") {
       updatedChannels = updatedChannels.filter(
         (channel) => channel.language === languageFilter
       );
     }
 
-    // Apply HD filter
     if (isHD) {
       updatedChannels = updatedChannels.filter((channel) =>
-        channel.filters.includes("HD")
+        channel.title.includes("HD")
       );
     }
 
-    // Apply search filter
     if (searchTerm) {
       updatedChannels = updatedChannels.filter(
         (channel) =>
@@ -84,32 +92,48 @@ const ContentGuide = () => {
       );
     }
 
-    setFilteredChannels(updatedChannels);
-  };
+    if (showFavorites) {
+      updatedChannels = updatedChannels.filter((channel) =>
+        favorites.includes(channel.id)
+      );
+    }
 
-  // Re-run filter logic when any of the filter states change
+    if (sortOrder === "ascending") {
+      updatedChannels = [...updatedChannels].sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+    } else if (sortOrder === "descending") {
+      updatedChannels = [...updatedChannels].sort((a, b) =>
+        b.title.localeCompare(a.title)
+      );
+    }
+
+    return updatedChannels;
+  }, [
+    channels,
+    categoryFilter,
+    languageFilter,
+    isHD,
+    searchTerm,
+    showFavorites,
+    sortOrder,
+  ]);
+
   useEffect(() => {
-    filterChannels();
-  }, [categoryFilter, languageFilter, isHD, searchTerm, channels]);
+    setFilteredChannels(filterChannels);
+    setIsFiltering(false);
+  }, [filterChannels]);
 
-  // Handle search functionality
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  // Handle category filter
   const handleCategoryFilter = (category) => {
     setCategoryFilter(category);
   };
 
-  // Handle language filter
   const handleLanguageFilter = (language) => {
     setLanguageFilter(language);
-  };
-
-  // Toggle HD filter
-  const toggleHDFilter = () => {
-    setIsHD(!isHD);
   };
 
   const toggleFavorite = (channelId) => {
@@ -118,6 +142,18 @@ const ContentGuide = () => {
     } else {
       setFavorites([...favorites, channelId]);
     }
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder((prevSortOrder) => {
+      if (prevSortOrder === "none") {
+        return "ascending";
+      } else if (prevSortOrder === "ascending") {
+        return "descending";
+      } else {
+        return "none";
+      }
+    });
   };
 
   return (
@@ -143,111 +179,179 @@ const ContentGuide = () => {
           />
         </Flex>
       ) : (
-        <Box p={5} maxW="1280px" mx="auto">
-          <Input
-            placeholder="Search by name or number"
-            value={searchTerm}
-            onChange={handleSearch}
-            mb={4}
-          />
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              HD Only
-            </Text>
-            <Checkbox isChecked={isHD} onChange={toggleHDFilter} />
-          </Box>
-
-          {/* Category Filter */}
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              Category
-            </Text>
-            <Flex wrap="wrap">
-              <Button
-                onClick={() => handleCategoryFilter("All")}
-                m={1}
-                bg={categoryFilter === "All" ? "blue.500" : "gray.200"}
-                color={categoryFilter === "All" ? "white" : "black"}
-                _hover={{
-                  bg: categoryFilter === "All" ? "blue.600" : "gray.300",
-                }}
-              >
-                All
-              </Button>
-              {CATEGORIES.map((category) => (
-                <Button
-                  key={category}
-                  onClick={() => handleCategoryFilter(category)}
-                  m={1}
-                  bg={categoryFilter === category ? "blue.500" : "gray.200"}
-                  color={categoryFilter === category ? "white" : "black"}
-                  _hover={{
-                    bg: categoryFilter === category ? "blue.600" : "gray.300",
-                  }}
-                >
-                  {category}
-                </Button>
-              ))}
-            </Flex>
-          </Box>
-
-          {/* Language Filter */}
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              Language
-            </Text>
-            <Flex wrap="wrap">
-              <Button
-                onClick={() => handleLanguageFilter("All")}
-                m={1}
-                bg={languageFilter === "All" ? "blue.500" : "gray.200"}
-                color={languageFilter === "All" ? "white" : "black"}
-                _hover={{
-                  bg: languageFilter === "All" ? "blue.600" : "gray.300",
-                }}
-              >
-                All
-              </Button>
-              {LANGUAGES.map((lang) => (
-                <Button
-                  key={lang}
-                  onClick={() => handleLanguageFilter(lang)}
-                  m={1}
-                  bg={languageFilter === lang ? "blue.500" : "gray.200"}
-                  color={languageFilter === lang ? "white" : "black"}
-                  _hover={{
-                    bg: languageFilter === lang ? "blue.600" : "gray.300",
-                  }}
-                >
-                  {lang}
-                </Button>
-              ))}
-            </Flex>
-          </Box>
-
-          <Grid
-            templateColumns={{
-              base: "1fr", // 1 card per row on mobile
-              sm: "1fr", // 1 card per row on small screens
-              md: "repeat(2, 1fr)", // 2 cards per row on medium screens
-              lg: "repeat(3, 1fr)", // 3 cards per row on large screens
-            }}
-            gap={6}
+        <>
+          <VStack
+            display="flex"
+            alignItems="center"
+            bgColor="#E6007D"
+            py="20px"
           >
-            {filteredChannels.length > 0 ? (
-              filteredChannels.map((channel) => (
-                <ChannelCard
-                  key={channel.id}
-                  channel={channel}
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
+            <Image
+              src="https://acm-assets.eco.astro.com.my/images/astro-logo-white.svg"
+              alt="astro logo"
+            />
+            <Heading color="white">CONTENT GUIDE</Heading>
+          </VStack>
+          <Box p={5} maxW="1280px" mx="auto">
+            <VStack display="flex" alignItems="center" mb={4}>
+              <Input
+                placeholder="Search Channels"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </VStack>
+            <Box mb={4}>
+              <Text fontWeight="bold" mb={2}>
+                Category
+              </Text>
+              <Flex wrap="wrap">
+                <Button
+                  onClick={() => handleCategoryFilter("All")}
+                  m={1}
+                  bg={categoryFilter === "All" ? "blue.500" : "gray.200"}
+                  color={categoryFilter === "All" ? "white" : "black"}
+                  _hover={{
+                    bg: categoryFilter === "All" ? "blue.600" : "gray.300",
+                  }}
+                >
+                  All
+                </Button>
+                {CATEGORIES.map((category) => (
+                  <Button
+                    key={category}
+                    onClick={() => handleCategoryFilter(category)}
+                    m={1}
+                    bg={categoryFilter === category ? "blue.500" : "gray.200"}
+                    color={categoryFilter === category ? "white" : "black"}
+                    _hover={{
+                      bg: categoryFilter === category ? "blue.600" : "gray.300",
+                    }}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </Flex>
+            </Box>
+
+            <Box mb={4}>
+              <Text fontWeight="bold" mb={2}>
+                Language
+              </Text>
+              <Flex wrap="wrap">
+                <Button
+                  onClick={() => handleLanguageFilter("All")}
+                  m={1}
+                  bg={languageFilter === "All" ? "blue.500" : "gray.200"}
+                  color={languageFilter === "All" ? "white" : "black"}
+                  _hover={{
+                    bg: languageFilter === "All" ? "blue.600" : "gray.300",
+                  }}
+                >
+                  All
+                </Button>
+                {LANGUAGES.map((lang) => (
+                  <Button
+                    key={lang}
+                    onClick={() => handleLanguageFilter(lang)}
+                    m={1}
+                    bg={languageFilter === lang ? "blue.500" : "gray.200"}
+                    color={languageFilter === lang ? "white" : "black"}
+                    _hover={{
+                      bg: languageFilter === lang ? "blue.600" : "gray.300",
+                    }}
+                  >
+                    {lang}
+                  </Button>
+                ))}
+              </Flex>
+            </Box>
+
+            <Text fontWeight="bold" mb={2}>
+              Filters
+            </Text>
+            <Flex mb={4}>
+              <HStack spacing={1}>
+                <Button
+                  onClick={() => setIsHD(!isHD)}
+                  m={1}
+                  bg={isHD ? "blue.500" : "gray.200"}
+                  color={isHD ? "white" : "black"}
+                  _hover={{
+                    bg: isHD ? "blue.600" : "gray.300",
+                  }}
+                >
+                  HD
+                </Button>
+
+                <IconButton
+                  icon={showFavorites ? <FaHeart /> : <FaRegHeart />}
+                  onClick={() => setShowFavorites(!showFavorites)}
+                  color={showFavorites ? "pink.500" : "gray.500"}
+                  fontSize="1.5rem"
                 />
-              ))
+
+                <IconButton
+                  aria-label="Sort channels"
+                  icon={
+                    sortOrder === "ascending" ? (
+                      <FaSortAlphaDown />
+                    ) : sortOrder === "descending" ? (
+                      <FaSortAlphaUp />
+                    ) : (
+                      <FaFilter />
+                    )
+                  }
+                  onClick={toggleSortOrder}
+                  m={1}
+                  bg="gray.200"
+                  _hover={{
+                    bg: "gray.300",
+                  }}
+                />
+              </HStack>
+            </Flex>
+
+            {isFiltering ? (
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                height="100%"
+                minHeight="400px"
+              >
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="#E6007D"
+                  size="xl"
+                />
+              </Flex>
             ) : (
-              <Text>No channels available</Text>
+              <Grid
+                templateColumns={{
+                  base: "1fr",
+                  sm: "1fr",
+                  md: "repeat(2, 1fr)",
+                  lg: "repeat(3, 1fr)",
+                }}
+                gap={6}
+              >
+                {filteredChannels.length > 0 ? (
+                  filteredChannels.map((channel) => (
+                    <ChannelCard
+                      key={channel.id}
+                      channel={channel}
+                      favorites={favorites}
+                      toggleFavorite={toggleFavorite}
+                    />
+                  ))
+                ) : (
+                  <Text>No channels available</Text>
+                )}
+              </Grid>
             )}
-          </Grid>
-        </Box>
+          </Box>
+        </>
       )}
     </>
   );

@@ -29,10 +29,10 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
       backgroundColor="white"
       flexDirection="column"
       justifyContent="space-between"
-      boxShadow={"lg"}
+      boxShadow="lg"
       position="relative"
     >
-      <Box padding={"1rem"} display={"flex"}>
+      <Box padding="1rem" display="flex">
         <Image
           src={imageUrl}
           alt={title}
@@ -88,7 +88,7 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
 
       <UnorderedList listStyleType={"none"} padding={"1rem"}>
         {currentProgram ? (
-          <ListItem fontSize={"1rem"} lineHeight={1.5} margin={"0.25rem 0"}>
+          <ListItem fontSize="1rem" lineHeight={1.5} margin="0.25rem 0">
             On Now
             {"   "}
             {currentProgram.title}
@@ -101,10 +101,10 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
           nextPrograms.map((program, index) => (
             <ListItem
               key={index}
-              fontSize={"1rem"}
+              fontSize="1rem"
               lineHeight={1.5}
-              margin={"0.25rem 0"}
-              color={"#888"}
+              margin="0.25rem 0"
+              color="#888"
             >
               {new Date(program.datetime).toLocaleTimeString()}
               {"  "}
