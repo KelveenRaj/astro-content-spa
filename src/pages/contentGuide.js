@@ -13,6 +13,7 @@ import {
   VStack,
   Image,
   IconButton,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   FaHeart,
@@ -20,6 +21,8 @@ import {
   FaFilter,
   FaSortAlphaUp,
   FaSortAlphaDown,
+  FaMoon,
+  FaSun,
 } from "react-icons/fa";
 import ChannelCard from "../components/channelCard";
 import { LANGUAGES, CATEGORIES } from "../utils/constants";
@@ -38,6 +41,7 @@ const ContentGuide = () => {
   });
   const [showFavorites, setShowFavorites] = useState(false);
   const [sortOrder, setSortOrder] = useState("none");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -192,13 +196,32 @@ const ContentGuide = () => {
             />
             <Heading color="white">CONTENT GUIDE</Heading>
           </VStack>
+
           <Box p={5} maxW="1280px" mx="auto">
             <VStack display="flex" alignItems="center" mb={4}>
-              <Input
-                placeholder="Search Channels"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+              <HStack w="100%">
+                <Input
+                  placeholder="Search Channels"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  bg={colorMode === "light" ? "white" : "gray.700"}
+                  color={colorMode === "light" ? "black" : "white"}
+                />
+
+                <IconButton
+                  aria-label="Toggle dark mode"
+                  icon={
+                    colorMode === "light" ? (
+                      <FaSun color="orange" />
+                    ) : (
+                      <FaMoon color="black" />
+                    )
+                  }
+                  onClick={toggleColorMode}
+                  bg="gray.200"
+                  _hover={{ bg: "gray.300" }}
+                />
+              </HStack>
             </VStack>
             <Box mb={4}>
               <Text fontWeight="bold" mb={2}>
@@ -286,6 +309,7 @@ const ContentGuide = () => {
                 <IconButton
                   icon={showFavorites ? <FaHeart /> : <FaRegHeart />}
                   onClick={() => setShowFavorites(!showFavorites)}
+                  bg="gray.200"
                   color={showFavorites ? "pink.500" : "gray.500"}
                   fontSize="1.5rem"
                 />
@@ -303,6 +327,7 @@ const ContentGuide = () => {
                   }
                   onClick={toggleSortOrder}
                   m={1}
+                  color="black"
                   bg="gray.200"
                   _hover={{
                     bg: "gray.300",

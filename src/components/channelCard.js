@@ -56,6 +56,7 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
             whiteSpace="nowrap"
             lineHeight="19px"
             textOverflow="ellipsis"
+            color="black"
           >
             CH{stbNumber}
           </Text>
@@ -67,6 +68,7 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
             whiteSpace="nowrap"
             lineHeight="19px"
             textOverflow="ellipsis"
+            color="black"
           >
             {title}
           </Text>
@@ -86,15 +88,22 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
 
       <Divider />
 
-      <UnorderedList listStyleType={"none"} padding={"1rem"}>
+      <UnorderedList listStyleType="none" padding="1rem">
         {currentProgram ? (
-          <ListItem fontSize="1rem" lineHeight={1.5} margin="0.25rem 0">
+          <ListItem
+            fontSize="1rem"
+            lineHeight={1.5}
+            margin="0.25rem 0"
+            color="black"
+          >
             On Now
             {"   "}
             {currentProgram.title}
           </ListItem>
         ) : (
-          <ListItem>No current program information available</ListItem>
+          <ListItem color="black">
+            No current program information available
+          </ListItem>
         )}
 
         {nextPrograms.length > 0 ? (
@@ -112,7 +121,7 @@ const ChannelCard = ({ channel, favorites, toggleFavorite }) => {
             </ListItem>
           ))
         ) : (
-          <ListItem>No upcoming program information</ListItem>
+          <ListItem color="black">No upcoming program information</ListItem>
         )}
       </UnorderedList>
     </Box>
