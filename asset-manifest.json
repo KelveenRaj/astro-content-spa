@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/astro-content-spa/static/js/main.d1215085.js",
+    "index.html": "/astro-content-spa/index.html",
+    "main.d1215085.js.map": "/astro-content-spa/static/js/main.d1215085.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d1215085.js"
+  ]
+}
